@@ -5,7 +5,7 @@ use tauri::{Manager, Window};
 
 #[tauri::command]
 #[specta::specta]
-fn close_splashscreen(window: Window) -> Result<(), String> {
+async fn close_splashscreen(window: Window) -> Result<(), String> {
     window
         .get_window("main")
         .expect("no window labeled 'main' found")
