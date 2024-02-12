@@ -4,7 +4,6 @@
 use tauri::{Manager, Window};
 
 #[tauri::command]
-#[specta::specta]
 fn close_splashscreen(window: Window) -> Result<(), String> {
     window
         .get_window("main")
@@ -15,17 +14,8 @@ fn close_splashscreen(window: Window) -> Result<(), String> {
 }
 
 fn main() {
-    let specta_builder = {
-        let specta_builder = tauri_specta::ts::builder()
-            .commands(tauri_specta::collect_commands!(close_splashscreen,));
-
-        #[cfg(debug_assertions)]
-        let specta_builder = specta_builder.path("../src/bindings.ts");
-        specta_builder.into_plugin()
-    };
-
     tauri::Builder::default()
-        .plugin(specta_builder)
+        .invoke_handler(tauri::generate_handler![close_splashscreen,])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

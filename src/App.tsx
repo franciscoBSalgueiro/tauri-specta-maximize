@@ -1,9 +1,9 @@
+import { invoke } from "@tauri-apps/api";
 import { useEffect } from "react";
-import { commands } from "./bindings";
 
 function App() {
   useEffect(() => {
-    commands.closeSplashscreen();
+    invoke("close_splashscreen")
   }, []);
 
   return <h1>Test</h1>;
